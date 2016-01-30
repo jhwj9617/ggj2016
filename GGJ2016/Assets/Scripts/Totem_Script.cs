@@ -28,15 +28,15 @@ public class Totem_Script : MonoBehaviour {
     }
 
     void buildAttack() {
-        addSegment("AttackSegment", attackSegment);
+        addSegment("AttackSegment", attackSegment, 0);
     }
 
     void buildDefense() {
-        addSegment("DefenseSegment", defenseSegment);
+        addSegment("DefenseSegment", defenseSegment, 1);
     }
 
     void buildSupport() {
-        addSegment("SupportSegment", supportSegment);
+        addSegment("SupportSegment", supportSegment, 2);
     }
 
     private void addSegment(string name, GameObject segment, int level) {
