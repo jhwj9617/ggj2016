@@ -40,7 +40,7 @@ public class SelectionScript : MonoBehaviour {
 	}
 
 
-	Const chooseRandomTotem () {
+	string chooseRandomTotem () {
 		return randomTotem[Random.Range (0, randomTotem.GetLength - 1)];  
 
 	}
