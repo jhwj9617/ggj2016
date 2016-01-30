@@ -6,9 +6,9 @@ public class Totem_Script : MonoBehaviour {
     private string defense = null;
     private string support = null;
 
-    private GameObject attackSegment;
-    private GameObject defenseSegment;
-    private GameObject supportSegment;
+    public GameObject attackSegment;
+    public GameObject defenseSegment;
+    public GameObject supportSegment;
 
     // Use this for initialization
     void Start () {
@@ -17,14 +17,17 @@ public class Totem_Script : MonoBehaviour {
 
     void Update () {
         if (Input.GetKeyUp(KeyCode.Z)){
-            buildAttack();
+            StartCoroutine(this.buildTotemSequence());
         }
-        if (Input.GetKeyUp(KeyCode.X)){
-            buildDefense();
-        }
-        if (Input.GetKeyUp(KeyCode.C)){
-            buildSupport();
-        }
+    }
+
+    private IEnumerator buildTotemSequence() {
+        float wait = 0.1f;
+        buildAttack();
+        yield return new WaitForSeconds(wait);
+        buildDefense();
+        yield return new WaitForSeconds(wait);
+        buildSupport();
     }
 
     void buildAttack() {
@@ -43,10 +46,34 @@ public class Totem_Script : MonoBehaviour {
         segment = new GameObject(name);
         SpriteRenderer renderer = segment.AddComponent<SpriteRenderer>();
         renderer.sprite = Resources.Load <Sprite> ("Sprites/Square");
+
+        if (level == 0) {
+            renderer.color = new Color(1, 0, 0, 1); // red
+        } else if (level == 1) {
+            renderer.color = new Color(1, 1, 0, 1); // yellow
+        } else if (level == 2) {
+            renderer.color = new Color(1, 1, 1, 1); // white
+        }
+
         segment.transform.parent = transform;
-        segment.transform.position = new Vector3(transform.position.x, 
-            (segment.GetComponent<Renderer>().bounds.size.y / 2) + segment.GetComponent<Renderer>().bounds.size.y * level, // set height based on level
+
+        float finalYPosition = (segment.GetComponent<Renderer>().bounds.size.y / 2) + segment.GetComponent<Renderer>().bounds.size.y * level;
+        float startingYPosition = finalYPosition + 0.25f;
+
+        segment.transform.localPosition = new Vector3(0, 
+            startingYPosition, // set height based on level
             0);
+        StartCoroutine(this.moveToPosition(segment.transform, new Vector3 (0, finalYPosition, 0), 0.15f));
+    }
+
+    private IEnumerator moveToPosition(Transform transform, Vector3 position, float timeToMove) {
+        var currentPos = transform.localPosition;
+        var t = 0f;
+        while(t < 1) {
+            t += Time.deltaTime / timeToMove;
+            transform.localPosition = Vector3.Lerp(currentPos, position, t);
+            yield return null;
+        }
     }
 
     void setAttack(string attack) {
