@@ -49,20 +49,22 @@ public class simulation : MonoBehaviour {
     bool simulateAttack(string attack, string defense){
         Debug.Log ("Simulating attack: " + attack + " against defense: " + defense);
 
+        // LIMITATION of switch statements - cannot have evaluated statements for cases. 
+        // See Const.cs for referenced constants
         switch (attack) {
-        case "fire":
+        case "FIRE":
             win = fireAttack(defense);
             break;
-        case "water":
+        case "WATER":
             win = waterAttack(defense);
             break;
-        case "earth":
+        case "EARTH":
             win = earthAttack(defense);
             break;
-        case "metal":
+        case "METAL":
             win = metalAttack(defense);
             break;
-        case "wood":
+        case "WOOD":
             win = woodAttack(defense);
             break;
         }
@@ -70,11 +72,11 @@ public class simulation : MonoBehaviour {
     }
 
     bool fireAttack(string defense){
-        if (defense == "metal") {
+        if (defense == Const.METAL) {
             return true;
-        } else if (defense == "wood") {
+        } else if (defense == Const.WOOD) {
             return true;
-        } else if (defense == "fire") {
+        } else if (defense == Const.FIRE) {
             return true;
         } else{
             return false;
@@ -82,11 +84,11 @@ public class simulation : MonoBehaviour {
     }
 
     bool waterAttack(string defense){
-        if (defense == "fire") {
+        if (defense == Const.FIRE) {
             return true;
-        } else if (defense == "metal") {
+        } else if (defense == Const.METAL) {
             return true;
-        } else if (defense == "water") {
+        } else if (defense == Const.WATER) {
             return true;
         } else{
             return false;
@@ -94,11 +96,11 @@ public class simulation : MonoBehaviour {
     }
 
     bool metalAttack(string defense){
-        if (defense == "wood") {
+        if (defense == Const.WOOD) {
             return true;
-        } else if (defense == "earth") {
+        } else if (defense == Const.EARTH) {
             return true;
-        } else if (defense == "metal") {
+        } else if (defense == Const.METAL) {
             return true;
         } else{
             //fire
@@ -107,11 +109,11 @@ public class simulation : MonoBehaviour {
     }
 
     bool earthAttack(string defense){
-        if (defense == "water") {
+        if (defense == Const.WATER) {
             return true;
-        } else if (defense == "fire") {
+        } else if (defense == Const.FIRE) {
             return true;
-        } else if (defense == "earth") {
+        } else if (defense == Const.EARTH) {
             return true;
         } else{
             //wood
@@ -120,11 +122,11 @@ public class simulation : MonoBehaviour {
     }
 
     bool woodAttack(string defense){
-        if (defense == "earth") {
+        if (defense == Const.EARTH) {
             return true;
-        } else if (defense == "water") {
+        } else if (defense == Const.WATER) {
             return true;
-        } else if (defense == "wood") {
+        } else if (defense == Const.WOOD) {
             return true;
         } else{
             //metal

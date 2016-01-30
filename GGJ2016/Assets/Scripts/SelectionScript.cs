@@ -62,27 +62,27 @@ public class SelectionScript : MonoBehaviour {
                 // Player 1 Selections
                 if (!a1Ready) {
                     if (Input.GetKey (KeyCode.Alpha1)) {
-                        p1a = "FIRE";
+                        p1a = Const.FIRE;
                         a1Ready = true;
                         print("Player1Attack = FIRE");
                     }
                     else if (Input.GetKey (KeyCode.Alpha2)) {
-                        p1a = "WOOD";
+                        p1a = Const.WOOD;
                         a1Ready = true;
                         print("Player1Attack = WOOD");
                     }
                     else if (Input.GetKey (KeyCode.Alpha3)) {
-                        p1a = "WATER";
+                        p1a = Const.WATER;
                         a1Ready = true;
                         print("Player1Attack = WATER");
                     }
                     else if (Input.GetKey (KeyCode.Alpha4)) {
-                        p1a = "METAL";
+                        p1a = Const.METAL;
                         a1Ready = true;
                         print("Player1Attack = METAL");
                     }
                     else if (Input.GetKey (KeyCode.Alpha5)) {
-                        p1a = "EARTH";
+                        p1a = Const.EARTH;
                         a1Ready = true;
                         print("Player1Attack = EARTH");
                     }
@@ -90,31 +90,31 @@ public class SelectionScript : MonoBehaviour {
                 }
                 else if(!d1Ready) {
                     if (Input.GetKey (KeyCode.Alpha1)) {
-                        p1d = "FIRE";
+                        p1d = Const.FIRE;
                         d1Ready = true;
                         p1Ready = true;
                         print("Player1Defense = FIRE, Player 1 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha2)) {
-                        p1d = "WOOD";
+                        p1d = Const.WOOD;
                         d1Ready = true;
                         p1Ready = true;
                         print("Player1Defense = WOOD, Player 1 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha3)) {
-                        p1d = "WATER";
+                        p1d = Const.WATER;
                         d1Ready = true;
                         p1Ready = true;
                         print("Player1Defense = WATER, Player 1 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha4)) {
-                        p1d = "METAL";
+                        p1d = Const.METAL;
                         d1Ready = true;
                         p1Ready = true;
                         print("Player1Defense = METAL, Player 1 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha5)) {
-                        p1d = "EARTH";
+                        p1d = Const.EARTH;
                         d1Ready = true;
                         p1Ready = true;
                         print("Player1Defense = EARTH, Player 1 Ready");
@@ -126,27 +126,27 @@ public class SelectionScript : MonoBehaviour {
                 // Player 2 Selections
                 if (!a2Ready) {
                     if (Input.GetKey (KeyCode.Alpha6)) {
-                        p2a = "FIRE";
+                        p2a = Const.FIRE;
                         a2Ready = true;
                         print("Player2Attack = FIRE");
                     }
                     else if (Input.GetKey (KeyCode.Alpha7)) {
-                        p2a = "WOOD";
+                        p2a = Const.WOOD;
                         a2Ready = true;
                         print("Player2Attack = WOOD");
                     }
                     else if (Input.GetKey (KeyCode.Alpha8)) {
-                        p2a = "WATER";
+                        p2a = Const.WATER;
                         a2Ready = true;
                         print("Player2Attack = WATER");
                     }
                     else if (Input.GetKey (KeyCode.Alpha9)) {
-                        p2a = "METAL";
+                        p2a = Const.METAL;
                         a2Ready = true;
                         print("Player2Attack = METAL");
                     }
                     else if (Input.GetKey (KeyCode.Alpha0)) {
-                        p2a = "EARTH";
+                        p2a = Const.EARTH;
                         a2Ready = true;
                         print("Player2Attack = EARTH");
                     }
@@ -154,31 +154,31 @@ public class SelectionScript : MonoBehaviour {
                 }
                 else if (!d2Ready) {
                     if (Input.GetKey (KeyCode.Alpha6)) {
-                        p2d = "FIRE";
+                        p2d = Const.FIRE;
                         d2Ready = true;
                         p2Ready = true;
                         print("Player2Defense = FIRE, Player 2 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha7)) {
-                        p2d = "WOOD";
+                        p2d = Const.WOOD;
                         d2Ready = true;
                         p2Ready = true;
                         print("Player2Defense = WOOD, Player 2 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha8)) {
-                        p2d = "WATER";
+                        p2d = Const.WATER;
                         d2Ready = true;
                         p2Ready = true;
                         print("Player2Defense = WATER, Player 2 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha9)) {
-                        p2d = "METAL";
+                        p2d = Const.METAL;
                         d2Ready = true;
                         p2Ready = true;
                         print("Player2Defense = METAL, Player 2 Ready");
                     }
                     else if (Input.GetKey (KeyCode.Alpha0)) {
-                        p2d = "EARTH";
+                        p2d = Const.EARTH;
                         d2Ready = true;
                         p2Ready = true;
                         print("Player2Defense = EARTH, Player 2 Ready");
