@@ -39,14 +39,15 @@ public class Totem_Script : MonoBehaviour {
         addSegment("SupportSegment", supportSegment);
     }
 
-    private void addSegment(string name, GameObject segment) {
+    private void addSegment(string name, GameObject segment, int level) {
         segment = new GameObject(name);
         SpriteRenderer renderer = segment.AddComponent<SpriteRenderer>();
         renderer.sprite = Resources.Load <Sprite> ("Sprites/Square");
-        segment.transform.parent = this.transform;
-        segment.transform = this.transform;
+        segment.transform.parent = transform;
+        segment.transform.position = new Vector3(transform.position.x, 
+            segment.GetComponent<Renderer>().bounds.size.y * level, // set height based on level
+            0);
     }
-
 
     void setAttack(string attack) {
         this.attack = attack;
