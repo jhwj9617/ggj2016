@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class simulation : MonoBehaviour {
+public class Simulation : MonoBehaviour {
 
     public bool totemsChosen = false;
 
@@ -11,16 +11,28 @@ public class simulation : MonoBehaviour {
     public string p2Attack;
     public string p2Defense;
     
-    public bool player1Attacks;
-    public bool player2Attacks;
+    public bool player1Wins;
+    public bool player2Wins;
     public int result;
 
     public bool win;
 
+    public GameObject player1Totem;
+    public GameObject player2Totem;
+
+    private Totem_Script p1TotemScript;
+    private Totem_Script p2TotemScript;
 
     // Use this for initialization
     void Start () {
         Debug.Log ("Simulation started");
+        totemsChosen = true;
+        p1Attack = Const.FIRE;
+        p1Defense = Const.WATER;
+        p2Attack = Const.WOOD;
+        p2Defense = Const.METAL;
+        p1TotemScript = player1Totem.GetComponent<Totem_Script>();
+        p2TotemScript = player2Totem.GetComponent<Totem_Script>();
     }
     
     // Update is called once per frame
@@ -28,21 +40,23 @@ public class simulation : MonoBehaviour {
         if (totemsChosen == true) {
             Debug.Log ("Totems have been chosen");
 
-            player1Attacks = simulateAttack (p1Attack, p2Defense);
-            player2Attacks = simulateAttack (p2Attack, p1Defense);
+            player1Wins = simulateAttack (p1Attack, p2Defense);
+            player2Wins = simulateAttack (p2Attack, p1Defense);
             totemsChosen = false;
 
             //who wins
             //return integer 0 = tie, 1 = player1 wins , 2 = player2  wins 
-            if(player1Attacks == true && player2Attacks == true){
+            if(player1Wins == true && player2Wins == true){
                 result = 0;
-            } else if(player1Attacks == true && player2Attacks == false){
+            } else if(player1Wins == true && player2Wins == false){
                 result = 1;
-            } else if(player1Attacks == false && player2Attacks == true){
+            } else if(player1Wins == false && player2Wins == true){
                 result = 2;
             } else{
                 result = 0;
             }
+            p1TotemScript.buildTotem(p1Attack, p1Defense);
+            p2TotemScript.buildTotem(p2Attack, p2Defense);
         }
     }
     // 
@@ -133,6 +147,4 @@ public class simulation : MonoBehaviour {
             return false;
         }
     }
-
-
 }
