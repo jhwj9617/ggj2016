@@ -45,7 +45,7 @@ public class Totem_Script : MonoBehaviour {
         renderer.sprite = Resources.Load <Sprite> ("Sprites/Square");
         segment.transform.parent = transform;
         segment.transform.position = new Vector3(transform.position.x, 
-            segment.GetComponent<Renderer>().bounds.size.y * level, // set height based on level
+            (segment.GetComponent<Renderer>().bounds.size.y / 2) + segment.GetComponent<Renderer>().bounds.size.y * level, // set height based on level
             0);
     }
 
