@@ -16,9 +16,12 @@ public class Totem_Script : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKeyUp(KeyCode.Z)){
-            StartCoroutine(this.buildTotemSequence());
-        }
+    }
+
+    public void buildTotem(string attack, string defense) {
+		this.attack = attack;
+		this.defense = defense;
+        StartCoroutine(this.buildTotemSequence());
     }
 
     private IEnumerator buildTotemSequence() {
@@ -74,18 +77,6 @@ public class Totem_Script : MonoBehaviour {
             transform.localPosition = Vector3.Lerp(currentPos, position, t);
             yield return null;
         }
-    }
-
-    void setAttack(string attack) {
-        this.attack = attack;
-    }
-
-    void setDefense(string defense) {
-        this.defense = defense;
-    }
-
-    void setSupport(string support) {
-        this.support = support;
     }
 
     public string getAttack() {
