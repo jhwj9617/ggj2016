@@ -18,6 +18,8 @@ public class SelectionScript : MonoBehaviour {
 	private float countDown;
 	private string[] randomTotem = new string[5] {Const.FIRE, Const.WATER, Const.EARTH, Const.METAL, Const.WOOD};
 
+	public GameObject TimerLabel;
+
 
 	// FIRE -> WOOD -> WATER -> EARTH -> METAL
 
@@ -41,7 +43,8 @@ public class SelectionScript : MonoBehaviour {
 
 
 	string chooseRandomTotem () {
-		return randomTotem[Random.Range (0, randomTotem.GetLength - 1)];  
+		int n = randomTotem.Length;
+		return randomTotem[Random.Range (0, n)] ;  
 
 	}
 
@@ -56,14 +59,12 @@ public class SelectionScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		countDown -= Time.deltaTime;
+
 
 	
 		if (!allReady) {
 
 			if (countDown <= 0) {
-				p1Ready = true;
-				p2Ready = true;
 
 				// randomize totem blocks
 				if (p1a == null){
@@ -79,9 +80,18 @@ public class SelectionScript : MonoBehaviour {
 					p2d = chooseRandomTotem (); 
 					
 				}
+				p1Ready = true;
+				p2Ready = true;
+			}
+
+			if (countDown > 0) {
+
+				countDown -= Time.deltaTime;
+
 			}
 
 			if (!p1Ready || !p2Ready) {
+
 
 				// Player 1 Selections
 				if (!a1Ready) {
