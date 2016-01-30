@@ -13,6 +13,7 @@ public class simulation : MonoBehaviour {
 	
 	public bool player1Attacks;
 	public bool player2Attacks;
+	public int result;
 
 
 	// Use this for initialization
@@ -32,13 +33,13 @@ public class simulation : MonoBehaviour {
 			//who wins
 			//return integer 0 = tie, 1 = player1 wins , 2 = player2  wins 
 			if(player1Attacks == true && player2Attacks == true){
-				return 0;
+				result = 0;
 			} else if(player1Attacks == true && player2Attacks == false){
-				return 1;
+				result = 1;
 			} else if(player1Attacks == false && player2Attacks == true){
-				return 2;
+				result = 2;
 			} else{
-				return 0;
+				result = 0;
 			}
 		}
 	}
