@@ -2,27 +2,27 @@
 using System.Collections;
 
 public class Simulation : MonoBehaviour {
-	
+
 	public bool totemsChosen = false;
-	
+
 	public string p1Attack;
 	public string p1Defense;
-	
+
 	public string p2Attack;
 	public string p2Defense;
-	
+
 	public bool player1Wins;
 	public bool player2Wins;
 	public int result;
-	
+
 	public bool win;
-	
+
 	public GameObject player1Totem;
 	public GameObject player2Totem;
-	
+
 	private Totem_Script p1TotemScript;
 	private Totem_Script p2TotemScript;
-	
+
 	// Use this for initialization
 	void Start () {
 		Debug.Log ("Simulation started");
@@ -34,16 +34,16 @@ public class Simulation : MonoBehaviour {
 		p1TotemScript = player1Totem.GetComponent<Totem_Script>();
 		p2TotemScript = player2Totem.GetComponent<Totem_Script>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (totemsChosen == true) {
 			Debug.Log ("Totems have been chosen");
-			
+
 			player1Wins = simulateAttack (p1Attack, p2Defense);
 			player2Wins = simulateAttack (p2Attack, p1Defense);
 			totemsChosen = false;
-			
+
 			//who wins
 			//return integer 0 = tie, 1 = player1 wins , 2 = player2  wins 
 			if(player1Wins == true && player2Wins == true){
@@ -55,14 +55,21 @@ public class Simulation : MonoBehaviour {
 			} else{
 				result = 0;
 			}
+		}
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			p1TotemScript.buildTotem(p1Attack, p1Defense);
 			p2TotemScript.buildTotem(p2Attack, p2Defense);
+		}
+
+		if (Input.GetKeyDown (KeyCode.D)) {
+			p1TotemScript.deleteTotem();
+			p2TotemScript.deleteTotem();
 		}
 	}
 	// 
 	bool simulateAttack(string attack, string defense){
 		Debug.Log ("Simulating attack: " + attack + " against defense: " + defense);
-		
+
 		// LIMITATION of switch statements - cannot have evaluated statements for cases. 
 		// See Const.cs for referenced constants
 		switch (attack) {
@@ -84,7 +91,7 @@ public class Simulation : MonoBehaviour {
 		}
 		return win;
 	}
-	
+
 	bool fireAttack(string defense){
 		if (defense == Const.METAL) {
 			return true;
@@ -96,7 +103,7 @@ public class Simulation : MonoBehaviour {
 			return false;
 		}
 	}
-	
+
 	bool waterAttack(string defense){
 		if (defense == Const.FIRE) {
 			return true;
@@ -108,7 +115,7 @@ public class Simulation : MonoBehaviour {
 			return false;
 		}
 	}
-	
+
 	bool metalAttack(string defense){
 		if (defense == Const.WOOD) {
 			return true;
@@ -121,7 +128,7 @@ public class Simulation : MonoBehaviour {
 			return false;
 		}
 	}
-	
+
 	bool earthAttack(string defense){
 		if (defense == Const.WATER) {
 			return true;
@@ -134,7 +141,7 @@ public class Simulation : MonoBehaviour {
 			return false;
 		}
 	}
-	
+
 	bool woodAttack(string defense){
 		if (defense == Const.EARTH) {
 			return true;
