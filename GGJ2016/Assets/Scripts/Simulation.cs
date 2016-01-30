@@ -1,32 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OnAttack : MonoBehaviour {
-	
-	//if currentPlayer = player1, attack = player2 , defense = player 1
-	//gets value to subtract off current player's health
+public class Simulation : MonoBehaviour {
 	
 	public bool totemsChosen = false;
 	
-	public string player1Attack;
-	public string player2Attack;
-	public string player1Defence;
-	public string player2Defence;
-	public string player1Animal;
-	public string player2Animal;
+	public string p1Attack;
+	public string p1Defense;
 	
-	public int highDamage = 30;
-	public int mediumDamage = 20;
-	public int lowDamage = 10;
-	public int noDamage = 0;
+	public string p2Attack;
+	public string p2Defense;
 	
+	public bool player1Wins;
+	public bool player2Wins;
+	public int result;
 	
-	public int player1Damaged;
-	public int player2Damaged;
+	public bool win;
+	
+	public GameObject player1Totem;
+	public GameObject player2Totem;
+	
+	private Totem_Script p1TotemScript;
+	private Totem_Script p2TotemScript;
 	
 	// Use this for initialization
 	void Start () {
 		Debug.Log ("Simulation started");
+		totemsChosen = true;
+		p1Attack = Const.FIRE;
+		p1Defense = Const.WATER;
+		p2Attack = Const.WOOD;
+		p2Defense = Const.METAL;
+		p1TotemScript = player1Totem.GetComponent<Totem_Script>();
+		p2TotemScript = player2Totem.GetComponent<Totem_Script>();
 	}
 	
 	// Update is called once per frame
@@ -34,169 +40,111 @@ public class OnAttack : MonoBehaviour {
 		if (totemsChosen == true) {
 			Debug.Log ("Totems have been chosen");
 			
-			int baseDamage = 0;
-			baseDamage = simulateAttack (enemyAttack, playerDefense);
-			enhancedDamage = applyEnemyAnimal (baseDamage, enemyAnimal);
+			player1Wins = simulateAttack (p1Attack, p2Defense);
+			player2Wins = simulateAttack (p2Attack, p1Defense);
 			totemsChosen = false;
 			
-			//How much each player is being damaged
-			player1Damaged = onAttack(player2Attack, player1Defence, player2Animal);
-			player2Damaged = onAttack(player1Attack, player2Defence, player1Animal);
-			
-			//Apply damage reduction based on player's animal
-			if(player1Animal == "TANUKI") {
-				player1Damaged = onDefence(player1Animal, player1Damaged);
+			//who wins
+			//return integer 0 = tie, 1 = player1 wins , 2 = player2  wins 
+			if(player1Wins == true && player2Wins == true){
+				result = 0;
+			} else if(player1Wins == true && player2Wins == false){
+				result = 1;
+			} else if(player1Wins == false && player2Wins == true){
+				result = 2;
+			} else{
+				result = 0;
 			}
-			
+			p1TotemScript.buildTotem(p1Attack, p1Defense);
+			p2TotemScript.buildTotem(p2Attack, p2Defense);
 		}
 	}
-	
-	
-	int onAttack(string attack,string defence,string animal){
-		int damage = 0;
-		switch (attack) {
-		case "fire":
-			damage = fireAttack(defense);
-			break;
-		case "water":
-			damage = waterAttack(defense);
-			break;
-		case "earth":
-			damage = earthAttack(defense);
-			break;
-		case "metal":
-			damage = metalAttack(defense);
-			break;
-		case "wood":
-			damage = woodAttack(defense);
-			break;
-		}
-		if(animal == "DRAGON"){
-			damage = applyAttackingAnimal(animal, damage);
-		}
-		
-		return damage;
-		
-	}
-	
-	int applyAttackingAnimal(string animal, int damage){
-		if(animal == "DRAGON"){
-			float percentage = Random.Range(0,1);
-			if(percentage <= 0.2){
-				damage = damage * 2;
-			}
-		}
-		
-		return damage;
-	}
-	
-	int applyDefenceAnimal(string animal, int damage){
-		//reduce damage by 10 only if damage is at least 10 or greater
-		if(animal == "HUMAN"){
-			if(damage >= 10)){
-				damage -= 10;
-			}
-		}
-	}
-	
-	
-	
-	
-	int applyEnemyAnimal (int baseDamage, string animal){
-		//if dragon.. rand (0-1) if < 0.3 then x2 dmg'
-		Random rnd = new Random();
-		if (animal == "DRAGON") {
-			float percentage = Random.Range (0, 1);
-			if (percentage <= 0.2) {
-				baseDamage = baseDamage * 1.5;
-			}
-		}
-		//if oni.. 
-		//else nothing...
-		
-	}
-	int simulateAttack(string attack, string defense){
+	// 
+	bool simulateAttack(string attack, string defense){
 		Debug.Log ("Simulating attack: " + attack + " against defense: " + defense);
-		int damage = 0;
 		
+		// LIMITATION of switch statements - cannot have evaluated statements for cases. 
+		// See Const.cs for referenced constants
 		switch (attack) {
 		case "FIRE":
-			damage = fireAttack(defense);
+			win = fireAttack(defense);
 			break;
 		case "WATER":
-			damage = waterAttack(defense);
+			win = waterAttack(defense);
 			break;
 		case "EARTH":
-			damage = earthAttack(defense);
+			win = earthAttack(defense);
 			break;
 		case "METAL":
-			damage = metalAttack(defense);
+			win = metalAttack(defense);
 			break;
 		case "WOOD":
-			damage = woodAttack(defense);
+			win = woodAttack(defense);
 			break;
 		}
-		return damage;
+		return win;
 	}
 	
-	int fireAttack(string defense){
+	bool fireAttack(string defense){
 		if (defense == Const.METAL) {
-			return highDamage;
+			return true;
 		} else if (defense == Const.WOOD) {
-			return mediumDamage;
+			return true;
 		} else if (defense == Const.FIRE) {
-			return lowDamage;
+			return true;
 		} else{
-			return noDamage;
+			return false;
 		}
 	}
 	
-	int waterAttack(string defense){
+	bool waterAttack(string defense){
 		if (defense == Const.FIRE) {
-			return highDamage;
+			return true;
 		} else if (defense == Const.METAL) {
-			return mediumDamage;
+			return true;
 		} else if (defense == Const.WATER) {
-			return lowDamage;
+			return true;
 		} else{
-			return noDamage;
+			return false;
 		}
 	}
 	
-	int metalAttack(string defense){
+	bool metalAttack(string defense){
 		if (defense == Const.WOOD) {
-			return highDamage;
+			return true;
 		} else if (defense == Const.EARTH) {
-			return mediumDamage;
+			return true;
 		} else if (defense == Const.METAL) {
-			return lowDamage;
+			return true;
 		} else{
-			return noDamage;
+			//fire
+			return false;
 		}
 	}
 	
-	int earthAttack(string defense){
+	bool earthAttack(string defense){
 		if (defense == Const.WATER) {
-			return highDamage;
+			return true;
 		} else if (defense == Const.FIRE) {
-			return mediumDamage;
+			return true;
 		} else if (defense == Const.EARTH) {
-			return lowDamage;
+			return true;
 		} else{
-			return noDamage;
+			//wood
+			return false;
 		}
 	}
 	
-	int woodAttack(string defense){
+	bool woodAttack(string defense){
 		if (defense == Const.EARTH) {
-			return highDamage;
+			return true;
 		} else if (defense == Const.WATER) {
-			return mediumDamage;
+			return true;
 		} else if (defense == Const.WOOD) {
-			return lowDamage;
+			return true;
 		} else{
-			return noDamage;
+			//metal
+			return false;
 		}
 	}
-	
 }
