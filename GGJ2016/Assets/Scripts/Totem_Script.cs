@@ -19,6 +19,11 @@ public class Totem_Script : MonoBehaviour {
 
 	private int placeholderLevel = 0;
 
+	public AudioSource totemDropAudio;
+	public AudioSource stoneAudio;
+	public AudioSource animalAudio;
+
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -60,6 +65,7 @@ public class Totem_Script : MonoBehaviour {
 	}
 
 	public void addPlaceholder() {
+		stoneAudio.Play();
 		if (placeholderLevel == 0) {
 			attackSegment.SetActive (true);
 			addSegment(placeholderCode, attackSegment);
@@ -95,6 +101,10 @@ public class Totem_Script : MonoBehaviour {
 		yield return new WaitForSeconds(wait);
 		supportSegment.SetActive (true);
 		buildSupport();
+		totemDropAudio.Play ();
+
+		animalAudio.clip = Resources.Load("Audio/" + this.support) as AudioClip;
+		animalAudio.Play();
 	}
 
 	void buildAttack() {

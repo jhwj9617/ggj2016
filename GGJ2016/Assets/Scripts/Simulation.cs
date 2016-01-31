@@ -108,18 +108,13 @@ public class Simulation : MonoBehaviour {
 			Debug.Log ("Player1 taking:"+p1DamageTaken);
 			Debug.Log ("Player2 taking:" +p2DamageTaken);
 
-			p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal, p1DamageTaken);
-			p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal, p2DamageTaken);
-
+			StartCoroutine (this.buildTotems ());
 
 			// Animation
 			print("Hello who won ");
 			selectionScript.P1DmgTaken = p1DamageTaken;
 			selectionScript.P2DmgTaken = p2DamageTaken;
 			StartCoroutine(selectionScript.WhoWon());
-
-
-
 		}
 
 		if (Input.GetKeyDown (KeyCode.D)) {
@@ -146,6 +141,12 @@ public class Simulation : MonoBehaviour {
 //		if (Input.GetKeyDown (KeyCode.Y)) {
 //			p2TotemScript.addPlaceholder();
 //		}
+	}
+
+	private IEnumerator buildTotems() {
+		p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal, p1DamageTaken);
+		yield return new WaitForSeconds(0.5f);
+		p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal, p2DamageTaken);
 	}
 
 	public int heal(int baseDamageTaken, string animal){
