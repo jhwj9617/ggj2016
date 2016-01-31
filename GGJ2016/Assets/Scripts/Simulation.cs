@@ -44,8 +44,8 @@ public class Simulation : MonoBehaviour {
 	public GameObject player2Totem;
 	public GameObject UiSelectionController;
 
-	private Totem_Script p1TotemScript;
-	private Totem_Script p2TotemScript;
+	public Totem_Script p1TotemScript;
+	public Totem_Script p2TotemScript;
 	private SelectionScript selectionScript;
 
 	// Use this for initialization
@@ -137,12 +137,12 @@ public class Simulation : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.W)) {
 			p2TotemScript.getHit();
 		}
-		if (Input.GetKeyDown (KeyCode.T)) {
-			p1TotemScript.addPlaceholder();
-		}
-		if (Input.GetKeyDown (KeyCode.Y)) {
-			p2TotemScript.addPlaceholder();
-		}
+//		if (Input.GetKeyDown (KeyCode.T)) {
+//			p1TotemScript.addPlaceholder();
+//		}
+//		if (Input.GetKeyDown (KeyCode.Y)) {
+//			p2TotemScript.addPlaceholder();
+//		}
 	}
 
 	public int heal(int baseDamageTaken, string animal){

@@ -190,91 +190,105 @@ public class SelectionScript : MonoBehaviour {
 
 
 					// Player 1 Selections
-					if (!a1Ready) {
+					if(!s1Ready) {
 						if (Input.GetKeyDown (KeyCode.Alpha1)) {
-							p1a = Const.FIRE;
-							a1Ready = true;
-							print("Player1Attack = FIRE");
+							p1s = Const.FOX;
+							s1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Support = FOX");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-							p1a = Const.WOOD;
-							a1Ready = true;
-							print("Player1Attack = WOOD");
+							p1s = Const.MOOSE;
+							s1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Support = MOOSE");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha3)) {
-							p1a = Const.WATER;
-							a1Ready = true;
-							print("Player1Attack = WATER");
+							p1s = Const.DRAGON;
+							s1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Support = DRAGON");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha4)) {
-							p1a = Const.METAL;
-							a1Ready = true;
-							print("Player1Attack = METAL");
+							p1s = Const.ONI;
+							s1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Support = ONI");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha5)) {
-							p1a = Const.EARTH;
-							a1Ready = true;
-							print("Player1Attack = EARTH");
+							p1s = Const.TANUKI;
+							s1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Support = TANUKI");
 						}
-
-					}
-					else if(!d1Ready) {
+						
+					} else if(!d1Ready) {
 						if (Input.GetKeyDown (KeyCode.Alpha1)) {
 							p1d = Const.FIRE;
 							d1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
 							print("Player1Defense = FIRE");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha2)) {
 							p1d = Const.WOOD;
 							d1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
 							print("Player1Defense = WOOD");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha3)) {
 							p1d = Const.WATER;
 							d1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
 							print("Player1Defense = WATER");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha4)) {
 							p1d = Const.METAL;
 							d1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
 							print("Player1Defense = METAL");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha5)) {
 							p1d = Const.EARTH;
 							d1Ready = true;
+							simulationScript.p1TotemScript.addPlaceholder();
 							print("Player1Defense = EARTH");
 						}
 
-					}else if(!s1Ready) {
+					}else if (!a1Ready) {
 						if (Input.GetKeyDown (KeyCode.Alpha1)) {
-							p1s = Const.FOX;
-							s1Ready = true;
+							p1a = Const.FIRE;
+							a1Ready = true;
 							p1Ready = true;
-							print("Player1Support = FOX, Player 1 Ready");
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Attack = FIRE, Player 1 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-							p1s = Const.MOOSE;
-							s1Ready = true;
+							p1a = Const.WOOD;
+							a1Ready = true;
 							p1Ready = true;
-							print("Player1Support = MOOSE, Player 1 Ready");
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Attack = WOOD, Player 1 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha3)) {
-							p1s = Const.DRAGON;
-							s1Ready = true;
+							p1a = Const.WATER;
+							a1Ready = true;
 							p1Ready = true;
-							print("Player1Support = DRAGON, Player 1 Ready");
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Attack = WATER, Player 1 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha4)) {
-							p1s = Const.ONI;
-							s1Ready = true;
+							p1a = Const.METAL;
+							a1Ready = true;
 							p1Ready = true;
-							print("Player1Support = ONI, Player 1 Ready");
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Attack = METAL, Player 1 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha5)) {
-							p1s = Const.TANUKI;
-							s1Ready = true;
+							p1a = Const.EARTH;
+							a1Ready = true;
 							p1Ready = true;
-							print("Player1Support = TANUKI, Player 1 Ready");
+							simulationScript.p1TotemScript.addPlaceholder();
+							print("Player1Attack = EARTH, Player 1 Ready");
 						}
 						
 					}
@@ -282,91 +296,105 @@ public class SelectionScript : MonoBehaviour {
 
 
 					// Player 2 Selections
-					if (!a2Ready) {
+					if(!s2Ready) {
 						if (Input.GetKeyDown (KeyCode.Alpha6)) {
-							p2a = Const.FIRE;
-							a2Ready = true;
-							print("Player2Attack = FIRE");
+							p2s = Const.FOX;
+							s2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player1Support = FOX");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha7)) {
-							p2a = Const.WOOD;
-							a2Ready = true;
-							print("Player2Attack = WOOD");
+							p2s = Const.MOOSE;
+							s2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player1Support = MOOSE");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha8)) {
-							p2a = Const.WATER;
-							a2Ready = true;
-							print("Player2Attack = WATER");
+							p2s = Const.DRAGON;
+							s2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player1Support = DRAGON");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha9)) {
-							p2a = Const.METAL;
-							a2Ready = true;
-							print("Player2Attack = METAL");
+							p2s = Const.ONI;
+							s2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player1Support = ONI");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha0)) {
-							p2a = Const.EARTH;
-							a2Ready = true;
-							print("Player2Attack = EARTH");
+							p2s = Const.TANUKI;
+							s2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player1Support = TANUKI");
 						}
-
-					}
-					else if (!d2Ready) {
+						
+					} else if (!d2Ready) {
 						if (Input.GetKeyDown (KeyCode.Alpha6)) {
 							p2d = Const.FIRE;
 							d2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
 							print("Player2Defense = FIRE");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha7)) {
 							p2d = Const.WOOD;
 							d2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
 							print("Player2Defense = WOOD");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha8)) {
 							p2d = Const.WATER;
 							d2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
 							print("Player2Defense = WATER");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha9)) {
 							p2d = Const.METAL;
 							d2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
 							print("Player2Defense = METAL");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha0)) {
 							p2d = Const.EARTH;
 							d2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
 							print("Player2Defense = EARTH");
 						}
 
-					}else if(!s2Ready) {
+					}else if (!a2Ready) {
 						if (Input.GetKeyDown (KeyCode.Alpha6)) {
-							p2s = Const.FOX;
-							s2Ready = true;
-							p1Ready = true;
-							print("Player1Support = FOX, Player 2 Ready");
+							p2a = Const.FIRE;
+							a2Ready = true;
+							p2Ready = true;
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player2Attack = FIRE, Player 2 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha7)) {
-							p2s = Const.MOOSE;
-							s2Ready = true;
+							p2a = Const.WOOD;
+							a2Ready = true;
 							p2Ready = true;
-							print("Player1Support = MOOSE, Player 2 Ready");
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player2Attack = WOOD, Player 2 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha8)) {
-							p2s = Const.DRAGON;
-							s2Ready = true;
+							p2a = Const.WATER;
+							a2Ready = true;
 							p2Ready = true;
-							print("Player1Support = DRAGON, Player 2 Ready");
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player2Attack = WATER, Player 2 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha9)) {
-							p2s = Const.ONI;
-							s2Ready = true;
+							p2a = Const.METAL;
+							a2Ready = true;
 							p2Ready = true;
-							print("Player1Support = ONI, Player 2 Ready");
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player2Attack = METAL, Player 2 Ready");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha0)) {
-							p2s = Const.TANUKI;
-							s2Ready = true;
+							p2a = Const.EARTH;
+							a2Ready = true;
 							p2Ready = true;
-							print("Player1Support = TANUKI, Player 2 Ready");
+							simulationScript.p2TotemScript.addPlaceholder();
+							print("Player2Attack = EARTH, Player 2 Ready");
 						}
 						
 					}
