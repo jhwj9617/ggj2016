@@ -42,19 +42,58 @@ public class Totem_Script : MonoBehaviour {
 	}
 
 	void buildAttack() {
-		addSegment("AttackSegment", attackSegment, 0);
+		addSegment("att", attackSegment);
 	}
 
 	void buildDefense() {
-		addSegment("DefenseSegment", defenseSegment, 1);
+		addSegment("def", defenseSegment);
 	}
 
 	void buildSupport() {
-		addSegment("SupportSegment", supportSegment, 2);
+		addSegment("sup", supportSegment);
 	}
 
-	private void addSegment(string name, GameObject segment, int level) {
-		float finalYPosition = (segment.GetComponent<Renderer>().bounds.size.y / 2) + segment.GetComponent<Renderer>().bounds.size.y * level;
+	private void addSegment(string type, GameObject segment) {
+		float finalYPosition = 0f;
+		float spriteScale = 1f;
+		Vector3 spriteScaleVector;
+		string asset = "";
+		if (type == "sup") {
+			finalYPosition = 2.5f;
+			spriteScale = 0.7f;
+
+			// RANDOMIZING SUPPORT. TODO, set asset = support.ToLower()
+			int rand = Random.Range (0, 4);
+			if (rand == 0) {
+				asset = "dragon";
+			} else if (rand == 1) {
+				asset = "fox";
+			} else if (rand == 2) {
+				asset = "moose";
+				finalYPosition += 0.2f; // += 0.2f for moose
+			} else if (rand == 3) {
+				asset = "oni";
+			} else if (rand == 4) {
+				asset = "tanuki";
+			}
+		} else if (type == "def") {
+			finalYPosition = 1.5f;
+			spriteScale = 0.3f;
+			asset = type + "_" + defense.ToLower ();
+		} else if (type == "att") {
+			finalYPosition = 0.5f;
+			spriteScale = 0.3f;
+			asset = type + "_" + attack.ToLower ();
+		}
+		spriteScaleVector = new Vector3 (spriteScale, spriteScale, spriteScale);
+
+		string totemFileLoc = "Sprites/TotemFaces/";
+		Sprite sprite = Resources.Load <Sprite> (totemFileLoc + asset);
+
+		segment.GetComponent<SpriteRenderer>().sprite = sprite;
+
+		segment.transform.localScale = spriteScaleVector;
+
 		float startingYPosition = finalYPosition + 0.25f;
 
 		segment.transform.localPosition = new Vector3(0, 
