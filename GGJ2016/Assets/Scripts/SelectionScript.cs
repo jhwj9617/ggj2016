@@ -43,6 +43,10 @@ public class SelectionScript : MonoBehaviour {
 
 	public GameObject InfoSheet;
 
+	public GameObject MainMenuUi;
+	public GameObject CombatUI;
+	public GameObject EndGameUI;
+
 
 	// FIRE -> WOOD -> WATER -> EARTH -> METAL
 
@@ -92,11 +96,43 @@ public class SelectionScript : MonoBehaviour {
 		_P1hp = P1HPGO.GetComponent<UISlider>();
 		_P2hp = P2HPGO.GetComponent<UISlider>();
 	}
+
+	void ShowMainMenuUI () {
+		MainMenuUi.SetActive(true);
+		CombatUI.SetActive(false);
+		EndGameUI.SetActive(false);
+	}
+
+	void ShowCombatUI () {
+		MainMenuUi.SetActive(false);
+		CombatUI.SetActive(true);
+		EndGameUI.SetActive(false);
+	}
+
+	void ShowEndGameUI () {
+		MainMenuUi.SetActive(false);
+		CombatUI.SetActive(false);
+		EndGameUI.SetActive(true);
+	}
 		
 
 
 	// Update is called once per frame
 	void Update () {
+
+		if (Input.GetKeyDown (KeyCode.Space) && MainMenuUi.activeInHierarchy) {
+
+			ShowCombatUI();
+
+			CombatEnded = true;
+
+		}
+
+		if (Input.GetKeyDown (KeyCode.Space) && EndGameUI.activeInHierarchy) {
+			
+			ShowMainMenuUI();
+			
+		}
 
 		if (CombatEnded == true) {
 
@@ -349,6 +385,7 @@ public class SelectionScript : MonoBehaviour {
 				CombatEnded = false;
 			}
 		}
+
 	}
 
 	public void WhoWon () {
@@ -373,10 +410,20 @@ public class SelectionScript : MonoBehaviour {
 		_P1hp.value = P1HP/100;
 		_P2hp.value = P2HP/100;
 
+
 		yield return new WaitForSeconds(3f);
 
 		allReady = false;
-		CombatEnded = true;
+
+		if (P1HP <= 0 || P2HP <= 0){
+			CombatEnded = false; 
+
+			ShowEndGameUI ();
+			
+		} else {
+			CombatEnded = true;
+		}
+
 
 	}
 	
