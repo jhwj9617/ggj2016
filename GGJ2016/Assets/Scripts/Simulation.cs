@@ -64,6 +64,9 @@ public class Simulation : MonoBehaviour {
 
 			totemsChosen = false;
 			
+			p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal);
+			p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal);
+
 			//How much each player is being damaged
 			p1BaseDamageTaken = onAttack(p2Attack, p1Defense, p2Animal);
 			p2BaseDamageTaken = onAttack(p1Attack, p2Defense, p1Animal);
@@ -107,29 +110,13 @@ public class Simulation : MonoBehaviour {
 			
 			Debug.Log ("Player1 taking:"+p1DamageTaken);
 			Debug.Log ("Player2 taking:" +p2DamageTaken);
-//			//player1Wins = simulateAttack (p1Attack, p2Defense);
-//			//player2Wins = simulateAttack (p2Attack, p1Defense);
-//			totemsChosen = false;
-//
-//			//who wins
-//			//return integer 0 = tie, 1 = player1 wins , 2 = player2  wins 
-//			if(player1Wins == true && player2Wins == true){
-//				result = 0;
-//			} else if(player1Wins == true && player2Wins == false){
-//				result = 1;
-//			} else if(player1Wins == false && player2Wins == true){
-//				result = 2;
-//			} else{
-//				result = 0;
-//			}
+
+			// Animation
 
 			selectionScript.P1DmgTaken = p1DamageTaken;
 			selectionScript.P2DmgTaken = p2DamageTaken;
 			selectionScript.WhoWon();
 
-			// Animation
-			p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal);
-			p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal);
 		}
 
 		if (Input.GetKeyDown (KeyCode.D)) {
@@ -228,94 +215,6 @@ public class Simulation : MonoBehaviour {
 		}
 		return damage;
 	}
-
-//	bool simulateAttack(string attack, string defense){
-//		Debug.Log ("Simulating attack: " + attack + " against defense: " + defense);
-//
-//		// LIMITATION of switch statements - cannot have evaluated statements for cases. 
-//		// See Const.cs for referenced constants
-//		switch (attack) {
-//		case "FIRE":
-//			win = fireAttack(defense);
-//			break;
-//		case "WATER":
-//			win = waterAttack(defense);
-//			break;
-//		case "EARTH":
-//			win = earthAttack(defense);
-//			break;
-//		case "METAL":
-//			win = metalAttack(defense);
-//			break;
-//		case "WOOD":
-//			win = woodAttack(defense);
-//			break;
-//		}
-//		return win;
-//	}
-
-//	bool fireAttack(string defense){
-//		if (defense == Const.METAL) {
-//			return true;
-//		} else if (defense == Const.WOOD) {
-//			return true;
-//		} else if (defense == Const.FIRE) {
-//			return true;
-//		} else{
-//			return false;
-//		}
-//	}
-//
-//	bool waterAttack(string defense){
-//		if (defense == Const.FIRE) {
-//			return true;
-//		} else if (defense == Const.METAL) {
-//			return true;
-//		} else if (defense == Const.WATER) {
-//			return true;
-//		} else{
-//			return false;
-//		}
-//	}
-//
-//	bool metalAttack(string defense){
-//		if (defense == Const.WOOD) {
-//			return true;
-//		} else if (defense == Const.EARTH) {
-//			return true;
-//		} else if (defense == Const.METAL) {
-//			return true;
-//		} else{
-//			//fire
-//			return false;
-//		}
-//	}
-//
-//	bool earthAttack(string defense){
-//		if (defense == Const.WATER) {
-//			return true;
-//		} else if (defense == Const.FIRE) {
-//			return true;
-//		} else if (defense == Const.EARTH) {
-//			return true;
-//		} else{
-//			//wood
-//			return false;
-//		}
-//	}
-//
-//	bool woodAttack(string defense){
-//		if (defense == Const.EARTH) {
-//			return true;
-//		} else if (defense == Const.WATER) {
-//			return true;
-//		} else if (defense == Const.WOOD) {
-//			return true;
-//		} else{
-//			//metal
-//			return false;
-//		}
-//	}
 
 	public int fireAttack(string defense){
 		if (defense == Const.METAL) {

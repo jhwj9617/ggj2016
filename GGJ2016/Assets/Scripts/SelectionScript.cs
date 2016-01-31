@@ -18,10 +18,13 @@ public class SelectionScript : MonoBehaviour {
 	public bool p1Ready;
 	public bool p2Ready;
 	public bool allReady;
-	public bool CombatEnded = true;
+	public bool CombatEnded = false;
 
 	public int P1DmgTaken = 0;
 	public int P2DmgTaken = 0;
+
+	public float P1HP = 100;
+	public float P2HP = 100;
 
 	private float countDown;
 	private string[] randomTotem = new string[5] {Const.FIRE, Const.WATER, Const.EARTH, Const.METAL, Const.WOOD};
@@ -30,8 +33,15 @@ public class SelectionScript : MonoBehaviour {
 	public GameObject TimerLabel;
 	private UILabel _TimerLabel;
 
+	public GameObject P1HPGO;
+	public GameObject P2HPGO;
+	private UISlider _P1hp;
+	private UISlider _P2hp;
+
 	public GameObject SimulationGO;
 	private Simulation simulationScript;
+
+	public GameObject InfoSheet;
 
 
 	// FIRE -> WOOD -> WATER -> EARTH -> METAL
@@ -55,7 +65,6 @@ public class SelectionScript : MonoBehaviour {
 		p2Ready = false;
 		allReady = false;
 
-		TimerLabel.SetActive (true);
 		countDown = 20;
 	}
 
@@ -80,6 +89,8 @@ public class SelectionScript : MonoBehaviour {
 		_TimerLabel = TimerLabel.GetComponent<UILabel>();
 		simulationScript = SimulationGO.GetComponent<Simulation>();
 
+		_P1hp = P1HPGO.GetComponent<UISlider>();
+		_P2hp = P2HPGO.GetComponent<UISlider>();
 	}
 		
 
@@ -89,6 +100,8 @@ public class SelectionScript : MonoBehaviour {
 
 		if (CombatEnded == true) {
 
+			TimerLabel.SetActive (true);
+			InfoSheet.SetActive (true);
 			_TimerLabel.text = "" + (Mathf.Round(countDown));
 		
 			if (!allReady) {
@@ -96,6 +109,7 @@ public class SelectionScript : MonoBehaviour {
 				if (countDown <= 0) {
 
 					TimerLabel.SetActive (false);
+					InfoSheet.SetActive(false);
 
 					// randomize totem blocks
 					if (p1a == null){
@@ -318,11 +332,12 @@ public class SelectionScript : MonoBehaviour {
 				} 
 				else if (p1Ready && p2Ready) {
 					allReady = true;
-					TimerLabel.SetActive (false);
 					print("Both players ready");
 				}
 			}
 			else {
+				TimerLabel.SetActive (false);
+				InfoSheet.SetActive (false);
 				simulationScript.p1Attack = p1a;
 				simulationScript.p2Attack = p2a;
 				simulationScript.p1Defense = p1d;
@@ -331,6 +346,7 @@ public class SelectionScript : MonoBehaviour {
 				simulationScript.p2Animal = p2s;
 				simulationScript.totemsChosen = true;
 				Reinitialization();
+				CombatEnded = false;
 			}
 		}
 	}
@@ -341,12 +357,23 @@ public class SelectionScript : MonoBehaviour {
 
 	}
 
-	public IEnumerator ShowWinner () {
+	IEnumerator ShowWinner () {
 
-		Debug.Log("p1 took: " + P1DmgTaken);
-		Debug.Log("p2 took: " + P2DmgTaken);
+		P1HP -= P1DmgTaken;
+		P2HP -= P2DmgTaken;
 
-		yield return new WaitForSeconds(2f);
+		if (P1HP > 100){
+			P1HP = 100;
+		}
+
+		if (P2HP > 100){
+			P2HP = 100;
+		}
+
+		_P1hp.value = P1HP/100;
+		_P2hp.value = P2HP/100;
+
+		yield return new WaitForSeconds(3f);
 
 		allReady = false;
 		CombatEnded = true;
