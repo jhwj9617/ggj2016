@@ -126,10 +126,10 @@ public class Simulation : MonoBehaviour {
 			selectionScript.P1DmgTaken = p1DamageTaken;
 			selectionScript.P2DmgTaken = p2DamageTaken;
 			selectionScript.WhoWon();
-		}
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			p1TotemScript.buildTotem(p1Attack, p1Defense);
-			p2TotemScript.buildTotem(p2Attack, p2Defense);
+
+			// Animation
+			p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal);
+			p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal);
 		}
 
 		if (Input.GetKeyDown (KeyCode.D)) {

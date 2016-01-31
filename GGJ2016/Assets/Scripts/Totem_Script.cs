@@ -29,9 +29,10 @@ public class Totem_Script : MonoBehaviour {
 		supportSegment.SetActive (false);
 	}
 
-	public void buildTotem(string attack, string defense) {
+	public void buildTotem(string attack, string defense, string support) {
 		this.attack = attack;
 		this.defense = defense;
+		this.support = support;
 		StartCoroutine(this.buildTotemSequence());
 	}
 
@@ -72,22 +73,12 @@ public class Totem_Script : MonoBehaviour {
 			boxCollidorSizeX = 1.5f;
 			boxCollidorSizeY = 1.5f;
 
-			// RANDOMIZING SUPPORT. TODO, set asset = support.ToLower()
-			int rand = Random.Range (0, 5);
-			print (rand);
-			if (rand == 0) {
-				asset = "dragon";
-			} else if (rand == 1) {
+			asset = support.ToLower ();
+			if (support == "fox") {
 				spriteScale = 0.6f;
-				asset = "fox";
-			} else if (rand == 2) {
-				asset = "moose";
+			} else if (support == "moose") {
 				boxCollidorSizeX = 2f;
 				boxCollidorSizeY = 2f;
-			} else if (rand == 3) {
-				asset = "oni";
-			} else if (rand == 4) {
-				asset = "tanuki";
 			}
 		} else if (type == "def") {
 			finalYPosition = 1.5f;
@@ -107,8 +98,6 @@ public class Totem_Script : MonoBehaviour {
 
 		string totemFileLoc = "Sprites/TotemFaces/";
 		Sprite sprite = Resources.Load <Sprite> (totemFileLoc + asset);
-
-		print(asset);
 
 		segment.GetComponent<SpriteRenderer>().sprite = sprite;
 
