@@ -104,10 +104,9 @@ public class Totem_Script : MonoBehaviour {
 		buildSupport();
 		totemDropAudio.Play ();
 
-		string audioLoc = "Audio/" + this.support + Random.Range (1, 4).ToString ();
+		string audioLoc = "Audio/" + this.support + Random.Range (1, 4).ToString ()+"_bip";
 		animalAudio.clip = Resources.Load(audioLoc) as AudioClip;
 		animalAudio.Play();
-		print (audioLoc);
 	}
 
 	void buildAttack() {
