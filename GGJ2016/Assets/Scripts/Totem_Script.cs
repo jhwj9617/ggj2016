@@ -17,6 +17,12 @@ public class Totem_Script : MonoBehaviour {
 	void Update () {
 	}
 
+	// -1 is right
+	// 1 is left
+	public void explodeTotem(int direction) {
+		attackSegment.GetComponent<Rigidbody2D> ().AddForce(new Vector2(Random.Range(200f * direction, 400f * direction), Random.Range(200f, 400f)));
+	}
+
 	public void deleteTotem() {
 		attackSegment.SetActive (false);
 		defenseSegment.SetActive (false);
@@ -56,21 +62,28 @@ public class Totem_Script : MonoBehaviour {
 	private void addSegment(string type, GameObject segment) {
 		float finalYPosition = 0f;
 		float spriteScale = 1f;
+		float boxCollidorSizeX = 0f;
+		float boxCollidorSizeY = 0f;
 		Vector3 spriteScaleVector;
 		string asset = "";
 		if (type == "sup") {
 			finalYPosition = 2.5f;
 			spriteScale = 0.7f;
+			boxCollidorSizeX = 1.5f;
+			boxCollidorSizeY = 1.5f;
 
 			// RANDOMIZING SUPPORT. TODO, set asset = support.ToLower()
-			int rand = Random.Range (0, 4);
+			int rand = Random.Range (0, 5);
+			print (rand);
 			if (rand == 0) {
 				asset = "dragon";
 			} else if (rand == 1) {
+				spriteScale = 0.6f;
 				asset = "fox";
 			} else if (rand == 2) {
 				asset = "moose";
-				finalYPosition += 0.2f; // += 0.2f for moose
+				boxCollidorSizeX = 2f;
+				boxCollidorSizeY = 2f;
 			} else if (rand == 3) {
 				asset = "oni";
 			} else if (rand == 4) {
@@ -80,11 +93,16 @@ public class Totem_Script : MonoBehaviour {
 			finalYPosition = 1.5f;
 			spriteScale = 0.3f;
 			asset = type + "_" + defense.ToLower ();
+			boxCollidorSizeX = 2.5f;
+			boxCollidorSizeY = 3.2f;
 		} else if (type == "att") {
 			finalYPosition = 0.5f;
 			spriteScale = 0.3f;
 			asset = type + "_" + attack.ToLower ();
+			boxCollidorSizeX = 2.5f;
+			boxCollidorSizeY = 3.2f;
 		}
+		segment.GetComponent<BoxCollider2D> ().size = new Vector2 (boxCollidorSizeX, boxCollidorSizeY);
 		spriteScaleVector = new Vector3 (spriteScale, spriteScale, spriteScale);
 
 		string totemFileLoc = "Sprites/TotemFaces/";
@@ -101,7 +119,7 @@ public class Totem_Script : MonoBehaviour {
 		segment.transform.localPosition = new Vector3(0, 
 			startingYPosition, // set height based on level
 			0);
-		StartCoroutine(this.moveToPosition(segment.transform, new Vector3 (0, finalYPosition, 0), 0.15f));
+		segment.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
 	}
 
 	private IEnumerator moveToPosition(Transform transform, Vector3 position, float timeToMove) {

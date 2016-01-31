@@ -137,6 +137,12 @@ public class Simulation : MonoBehaviour {
 			p2TotemScript.deleteTotem();
 		}
 
+		if (Input.GetKeyDown (KeyCode.E)) {
+			p1TotemScript.explodeTotem(1);
+		}
+		if (Input.GetKeyDown (KeyCode.R)) {
+			p2TotemScript.explodeTotem(-1);
+		}
 	}
 
 	public int heal(string animal){
