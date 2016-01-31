@@ -16,13 +16,16 @@ public class SelectionScript : MonoBehaviour {
 	public bool allReady;
 	public bool CombatEnded = true;
 
+	public int CombatResult = 0;
+
 	private float countDown;
 	private string[] randomTotem = new string[5] {Const.FIRE, Const.WATER, Const.EARTH, Const.METAL, Const.WOOD};
 
 	public GameObject TimerLabel;
 	private UILabel _TimerLabel;
 
-	public GameObject Simulation;
+	public GameObject SimulationGO;
+	private Simulation simulationScript;
 
 
 	// FIRE -> WOOD -> WATER -> EARTH -> METAL
@@ -59,6 +62,7 @@ public class SelectionScript : MonoBehaviour {
 		Reinitialization (); 
 
 		_TimerLabel = TimerLabel.GetComponent<UILabel>();
+		simulationScript = SimulationGO.GetComponent<Simulation>();
 
 	}
 		
@@ -242,9 +246,37 @@ public class SelectionScript : MonoBehaviour {
 				}
 			}
 			else {
-				// send attack and defense to simulation
+				simulationScript.p1Attack = p1a;
+				simulationScript.p2Attack = p2a;
+				simulationScript.p1Defense = p1d;
+				simulationScript.p2Defense = p2d;
+				simulationScript.totemsChosen = true;
+				Reinitialization();
 			}
 		}
+	}
+
+	public void WhoWon () {
+
+		StartCoroutine(ShowWinner());
+
+	}
+
+	public IEnumerator ShowWinner () {
+
+		if (CombatResult == 0) {
+			Debug.Log("It's a Draw!");
+		} else if (CombatResult == 1) {
+			Debug.Log("P1 WINS!");
+		} else if (CombatResult == 2) {
+			Debug.Log("P2 WINS!");
+		}
+
+		yield return new WaitForSeconds(2f);
+
+		allReady = false;
+		CombatEnded = true;
+
 	}
 	
 }

@@ -19,20 +19,23 @@ public class Simulation : MonoBehaviour {
 
 	public GameObject player1Totem;
 	public GameObject player2Totem;
+	public GameObject UiSelectionController;
 
 	private Totem_Script p1TotemScript;
 	private Totem_Script p2TotemScript;
+	private SelectionScript selectionScript;
 
 	// Use this for initialization
 	void Start () {
 		Debug.Log ("Simulation started");
-		totemsChosen = true;
-		p1Attack = Const.FIRE;
+		totemsChosen = false;
+	/*	p1Attack = Const.FIRE;
 		p1Defense = Const.WATER;
 		p2Attack = Const.WOOD;
-		p2Defense = Const.METAL;
+		p2Defense = Const.METAL;*/
 		p1TotemScript = player1Totem.GetComponent<Totem_Script>();
 		p2TotemScript = player2Totem.GetComponent<Totem_Script>();
+		selectionScript = UiSelectionController.GetComponent<SelectionScript>();
 	}
 
 	// Update is called once per frame
@@ -55,6 +58,9 @@ public class Simulation : MonoBehaviour {
 			} else{
 				result = 0;
 			}
+
+			selectionScript.CombatResult = result;
+			selectionScript.WhoWon();
 		}
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			p1TotemScript.buildTotem(p1Attack, p1Defense);
@@ -65,6 +71,7 @@ public class Simulation : MonoBehaviour {
 			p1TotemScript.deleteTotem();
 			p2TotemScript.deleteTotem();
 		}
+
 	}
 	// 
 	bool simulateAttack(string attack, string defense){
