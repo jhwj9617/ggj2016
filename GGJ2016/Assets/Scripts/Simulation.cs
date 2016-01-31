@@ -102,8 +102,8 @@ public class Simulation : MonoBehaviour {
 			
 			//heal 
 			// moose
-			p1Heal = heal(p1Animal);
-			p2Heal = heal(p2Animal);
+			p1Heal = heal(p1BaseDamageTaken ,p1Animal);
+			p2Heal = heal(p2BaseDamageTaken, p2Animal);
 			
 			p1DamageTaken = p1DamageTaken - p1Heal;
 			p2DamageTaken = p2DamageTaken - p2Heal;
@@ -130,20 +130,34 @@ public class Simulation : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.R)) {
 			p2TotemScript.explodeTotem(-1);
 		}
+
+		if (Input.GetKeyDown (KeyCode.Q)) {
+			p1TotemScript.getHit();
+		}
+		if (Input.GetKeyDown (KeyCode.W)) {
+			p2TotemScript.getHit();
+		}
+		if (Input.GetKeyDown (KeyCode.T)) {
+			p1TotemScript.addPlaceholder();
+		}
+		if (Input.GetKeyDown (KeyCode.Y)) {
+			p2TotemScript.addPlaceholder();
+		}
 	}
 
-	public int heal(string animal){
+	public int heal(int baseDamageTaken, string animal){
 		int restoreHP = 0;
 		if(animal == "MOOSE")
 		{
-			Debug.Log ("MOOSE = HEALED");
-			restoreHP = 10;
+			if (baseDamageTaken == 0) {
+				Debug.Log ("MOOSE = HEALED");
+				restoreHP = 10;
+			}
 		}
 		return restoreHP;
 	}
 	
-	public int reduceDamage( int baseDamage, string animal)
-	{
+	public int reduceDamage( int baseDamage, string animal) {
 		int damageReduction = 0;
 		if(animal == "TANUKI")
 		{
@@ -151,7 +165,7 @@ public class Simulation : MonoBehaviour {
 				Debug.Log ("TANUKI = DAMAGE REDUCED");
 				damageReduction = 20;
 			} else if(baseDamage == 10){
-				damageReduction = -20;
+				damageReduction = -15;
 			}
 		}
 		return damageReduction;
@@ -172,7 +186,7 @@ public class Simulation : MonoBehaviour {
 	{
 		if(animal == "FOX"){
 			float percentage = Random.Range (0f, 1f);
-			if (percentage <= 0.2) {
+			if (percentage <= 0.30) {
 				Debug.Log ("FOX = EVADE");
 				damageTaken = 0;
 			}

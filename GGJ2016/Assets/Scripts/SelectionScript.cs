@@ -65,7 +65,7 @@ public class SelectionScript : MonoBehaviour {
 		p2Ready = false;
 		allReady = false;
 
-		countDown = 20;
+		countDown = 5;
 	}
 
 
