@@ -28,6 +28,15 @@ public class SelectionScript : MonoBehaviour {
 
 	public GameObject projectile1;
 	public GameObject projectile2;
+	private Animator projectile1Anim;
+	private Animator projectile2Anim;
+	
+	public RuntimeAnimatorController earthProjectile;
+	public RuntimeAnimatorController fireProjectile;
+	public RuntimeAnimatorController waterProjectile;
+	public RuntimeAnimatorController metalProjectile;
+	public RuntimeAnimatorController woodProjectile;
+
 	public GameObject totem1;
 	public GameObject totem2;
 
@@ -51,6 +60,11 @@ public class SelectionScript : MonoBehaviour {
 	public GameObject MainMenuUi;
 	public GameObject CombatUI;
 	public GameObject EndGameUI;
+	public GameObject MainMenuTitle;
+
+	public GameObject P1Wins;
+	public GameObject P2Wins;
+	public GameObject Tie;
 
 
 	// FIRE -> WOOD -> WATER -> EARTH -> METAL
@@ -100,30 +114,55 @@ public class SelectionScript : MonoBehaviour {
 
 		_P1hp = P1HPGO.GetComponent<UISlider>();
 		_P2hp = P2HPGO.GetComponent<UISlider>();
+
+		projectile1Anim = projectile1.GetComponent<Animator> ();
+		projectile2Anim = projectile2.GetComponent<Animator> ();
+		
+		pickProjectileColor ();
+	}
+
+	private void pickProjectileColor() {
+		projectile1Anim.runtimeAnimatorController = earthProjectile;
+		projectile2Anim.runtimeAnimatorController = waterProjectile;
 	}
 
 	void ShowMainMenuUI () {
+		P1HP = 100;
+		P2HP = 100;
+		_P1hp.value = P1HP/100;
+		_P2hp.value = P2HP/100;
 		MainMenuUi.SetActive(true);
+		MainMenuTitle.SetActive(true);
 		CombatUI.SetActive(false);
 		EndGameUI.SetActive(false);
+		removeWinMessage();
 	}
 
 	void ShowCombatUI () {
+		_P1hp.value = 0.01f;
+		_P2hp.value = 0.01f;
 		MainMenuUi.SetActive(false);
+		MainMenuTitle.SetActive(false);
 		CombatUI.SetActive(true);
 		EndGameUI.SetActive(false);
+		removeWinMessage();
 	}
 
 	void ShowEndGameUI () {
 		MainMenuUi.SetActive(false);
+		MainMenuTitle.SetActive(false);
 		CombatUI.SetActive(false);
 		EndGameUI.SetActive(true);
+		GameOver();
 	}
 		
 
 
 	// Update is called once per frame
 	void Update () {
+
+		_P1hp.value = Mathf.Lerp(_P1hp.value ,P1HP/100, Time.deltaTime*5) ;
+		_P2hp.value = Mathf.Lerp(_P2hp.value ,P2HP/100, Time.deltaTime*5) ;
 
 		if (Input.GetKeyDown (KeyCode.Space) && MainMenuUi.activeInHierarchy) {
 
@@ -482,10 +521,6 @@ public class SelectionScript : MonoBehaviour {
 			P2HP = 100;
 		}
 
-		_P1hp.value = P1HP/100;
-		_P2hp.value = P2HP/100;
-
-
 		yield return new WaitForSeconds(3f);
 
 		allReady = false;
@@ -500,6 +535,43 @@ public class SelectionScript : MonoBehaviour {
 		}
 
 
+	}
+
+	void GameOver() {
+		
+		if (P1HP <= 0 && P2HP <= 0) {
+			
+			Tie.SetActive(true);
+			P1Wins.SetActive(false);
+			P2Wins.SetActive(false);
+			
+			// play random tie commentary  
+		}
+		
+		else if (P1HP <= 0) {
+			
+			P2Wins.SetActive(true);
+			Tie.SetActive(false);
+			P1Wins.SetActive(false);
+			
+			// play P2 WIN commentary  
+		}
+		
+		else if (P2HP <= 0) {
+			
+			P1Wins.SetActive(true);
+			P2Wins.SetActive(false);
+			Tie.SetActive(false);
+			
+			// play P1 WIN commentary  
+		}
+		
+	}
+
+	void removeWinMessage () {
+		P2Wins.SetActive(false);
+		Tie.SetActive(false);
+		P1Wins.SetActive(false);
 	}
 	
 }

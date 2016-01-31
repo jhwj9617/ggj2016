@@ -34,6 +34,9 @@ public class Simulation : MonoBehaviour {
 	public int p1Heal;
 	public int p2Heal;
 
+	public string p1Effect;
+	public string p2Effect;
+
 	//public bool player1Wins;
 	//public bool player2Wins;
 	//public int result;
@@ -43,10 +46,12 @@ public class Simulation : MonoBehaviour {
 	public GameObject player1Totem;
 	public GameObject player2Totem;
 	public GameObject UiSelectionController;
+	public GameObject FloatingTxtContrlGO;
 
 	public Totem_Script p1TotemScript;
 	public Totem_Script p2TotemScript;
 	private SelectionScript selectionScript;
+	private FloatingTextController fltgtxtcntrl;
 
 	// Use this for initialization
 	void Start () {
@@ -55,6 +60,7 @@ public class Simulation : MonoBehaviour {
 		p1TotemScript = player1Totem.GetComponent<Totem_Script>();
 		p2TotemScript = player2Totem.GetComponent<Totem_Script>();
 		selectionScript = UiSelectionController.GetComponent<SelectionScript>();
+		fltgtxtcntrl = FloatingTxtContrlGO.GetComponent<FloatingTextController>();
 	}
 
 	// Update is called once per frame
@@ -75,23 +81,23 @@ public class Simulation : MonoBehaviour {
 			//Apply damage reduction based on player's animal
 			
 			//dragon
-			p1DamageTaken = increaseDamage(p1BaseDamageTaken, p2Animal);
-			p2DamageTaken = increaseDamage(p2BaseDamageTaken, p1Animal);
+			p1DamageTaken = increaseDamage(p1BaseDamageTaken, p2Animal, 1);
+			p2DamageTaken = increaseDamage(p2BaseDamageTaken, p1Animal, 2);
 			
 			//onni
-			p1DamageReflected = reflect(p1BaseDamageTaken, p1Animal);
-			p2DamageReflected = reflect(p2BaseDamageTaken, p2Animal);
+			p1DamageReflected = reflect(p1BaseDamageTaken, p1Animal, 1);
+			p2DamageReflected = reflect(p2BaseDamageTaken, p2Animal, 2);
 			
 			p1DamageTaken = p1DamageTaken + p2DamageReflected;
 			p2DamageTaken = p2DamageTaken + p1DamageReflected;
 			//evasion
 			//fox
-			p1DamageTaken = evasion(p1DamageTaken, p1Animal);
-			p2DamageTaken = evasion(p2DamageTaken, p2Animal);
+			p1DamageTaken = evasion(p1DamageTaken, p1Animal, 1);
+			p2DamageTaken = evasion(p2DamageTaken, p2Animal, 2);
 			//reduce damage
 			// tanuki
-			p1DamageReduced = reduceDamage(p1BaseDamageTaken, p1Animal);
-			p2DamageReduced = reduceDamage(p2BaseDamageTaken, p2Animal);
+			p1DamageReduced = reduceDamage(p1BaseDamageTaken, p1Animal, 1);
+			p2DamageReduced = reduceDamage(p2BaseDamageTaken, p2Animal, 2);
 			
 			// update Damage
 			p1DamageTaken = p1DamageTaken - p1DamageReduced;
@@ -99,8 +105,8 @@ public class Simulation : MonoBehaviour {
 			
 			//heal 
 			// moose
-			p1Heal = heal(p1BaseDamageTaken ,p1Animal);
-			p2Heal = heal(p2BaseDamageTaken, p2Animal);
+			p1Heal = heal(p1BaseDamageTaken ,p1Animal, 1);
+			p2Heal = heal(p2BaseDamageTaken, p2Animal, 2);
 			
 			p1DamageTaken = p1DamageTaken - p1Heal;
 			p2DamageTaken = p2DamageTaken - p2Heal;
@@ -142,26 +148,27 @@ public class Simulation : MonoBehaviour {
 //			p2TotemScript.addPlaceholder();
 //		}
 	}
-
+	
 	private IEnumerator buildTotems() {
 		p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal, p1DamageTaken);
 		yield return new WaitForSeconds(0.5f);
 		p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal, p2DamageTaken);
 	}
-
-	public int heal(int baseDamageTaken, string animal){
+	
+	public int heal(int baseDamageTaken, string animal, int player){
 		int restoreHP = 0;
 		if(animal == "MOOSE")
 		{
 			if (baseDamageTaken == 0) {
 				Debug.Log ("MOOSE = HEALED");
 				restoreHP = 10;
+				fltgtxtcntrl.PlaceFloatingText("Heal", player);
 			}
 		}
 		return restoreHP;
 	}
 	
-	public int reduceDamage( int baseDamage, string animal) {
+	public int reduceDamage( int baseDamage, string animal,int player) {
 		int damageReduction = 0;
 		if(animal == "TANUKI")
 		{
@@ -171,35 +178,38 @@ public class Simulation : MonoBehaviour {
 			} else if(baseDamage == 10){
 				damageReduction = -15;
 			}
+			fltgtxtcntrl.PlaceFloatingText("Gamble", player);
 		}
 		return damageReduction;
 	}
 	
-	public int reflect(int baseDamageTaken, string animal)
+	public int reflect(int baseDamageTaken, string animal, int player)
 	{
 		double reflectedDamage = 0;
 		//if baseDamage >= 30 it is super effective
 		if((animal == "ONI") && (baseDamageTaken >= 30)) {
 			Debug.Log ("ONI = reflect damage");
 			reflectedDamage = baseDamageTaken * 0.5;
+			fltgtxtcntrl.PlaceFloatingText("Reflect", player);
 		}
 		return (int)System.Math.Ceiling(reflectedDamage);
 	}
 	
-	public int evasion(int damageTaken, string animal)
+	public int evasion(int damageTaken, string animal, int player)
 	{
 		if(animal == "FOX"){
 			float percentage = Random.Range (0f, 1f);
 			if (percentage <= 0.30) {
 				Debug.Log ("FOX = EVADE");
 				damageTaken = 0;
+				fltgtxtcntrl.PlaceFloatingText("Dodge", player);
 			}
 		}
 		return damageTaken;
 	}
 	
 	
-	public int increaseDamage(int baseDamage, string animal)
+	public int increaseDamage(int baseDamage, string animal, int player)
 	{
 		if(animal == "DRAGON")
 		{
@@ -207,6 +217,9 @@ public class Simulation : MonoBehaviour {
 			if (percentage <= 0.2) {
 				Debug.Log ("DRAGON = increase damage");
 				baseDamage = (int)(baseDamage * 1.5);
+				if (baseDamage != 0) {
+				fltgtxtcntrl.PlaceFloatingText("Critical", player);
+				}
 			}
 		}
 		return baseDamage;
