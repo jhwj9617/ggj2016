@@ -66,6 +66,9 @@ public class SelectionScript : MonoBehaviour {
 	public GameObject P2Wins;
 	public GameObject Tie;
 
+	public AudioSource titleScreenMusic;
+	public AudioSource battleMusic;
+
 
 	// FIRE -> WOOD -> WATER -> EARTH -> METAL
 
@@ -119,6 +122,7 @@ public class SelectionScript : MonoBehaviour {
 		projectile2Anim = projectile2.GetComponent<Animator> ();
 		
 		pickProjectileColor ();
+		titleScreenMusic.Play ();
 	}
 
 	private void pickProjectileColor() {
@@ -136,6 +140,8 @@ public class SelectionScript : MonoBehaviour {
 		CombatUI.SetActive(false);
 		EndGameUI.SetActive(false);
 		removeWinMessage();
+		titleScreenMusic.Play ();
+		battleMusic.Stop ();
 	}
 
 	void ShowCombatUI () {
@@ -146,6 +152,8 @@ public class SelectionScript : MonoBehaviour {
 		CombatUI.SetActive(true);
 		EndGameUI.SetActive(false);
 		removeWinMessage();
+		titleScreenMusic.Stop ();
+		battleMusic.Play ();
 	}
 
 	void ShowEndGameUI () {
@@ -444,7 +452,6 @@ public class SelectionScript : MonoBehaviour {
 				}
 			}
 			else {
-				print ("fuck");
 				TimerLabel.SetActive (false);
 				InfoSheet.SetActive (false);
 				simulationScript.p1Attack = p1a;
@@ -522,6 +529,8 @@ public class SelectionScript : MonoBehaviour {
 		}
 
 		yield return new WaitForSeconds(3f);
+		simulationScript.p1TotemScript.deleteTotem ();
+		simulationScript.p2TotemScript.deleteTotem ();
 
 		allReady = false;
 

@@ -59,6 +59,7 @@ public class Totem_Script : MonoBehaviour {
 	}
 
 	public void deleteTotem() {
+		print ("fuck");
 		attackSegment.SetActive (false);
 		defenseSegment.SetActive (false);
 		supportSegment.SetActive (false);
@@ -103,8 +104,10 @@ public class Totem_Script : MonoBehaviour {
 		buildSupport();
 		totemDropAudio.Play ();
 
-		animalAudio.clip = Resources.Load("Audio/" + this.support) as AudioClip;
+		string audioLoc = "Audio/" + this.support + Random.Range (1, 4).ToString ();
+		animalAudio.clip = Resources.Load(audioLoc) as AudioClip;
 		animalAudio.Play();
+		print (audioLoc);
 	}
 
 	void buildAttack() {
@@ -163,8 +166,6 @@ public class Totem_Script : MonoBehaviour {
 
 		string totemFileLoc = "Sprites/TotemFaces/";
 		Sprite sprite = Resources.Load <Sprite> (totemFileLoc + asset);
-
-		print (totemFileLoc + asset);
 
 		segment.GetComponent<SpriteRenderer>().sprite = sprite;
 
