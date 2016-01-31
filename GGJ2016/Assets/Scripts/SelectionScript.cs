@@ -26,6 +26,11 @@ public class SelectionScript : MonoBehaviour {
 	public float P1HP = 100;
 	public float P2HP = 100;
 
+	public GameObject projectile1;
+	public GameObject projectile2;
+	public GameObject totem1;
+	public GameObject totem2;
+
 	private float countDown;
 	private string[] randomTotem = new string[5] {Const.FIRE, Const.WATER, Const.EARTH, Const.METAL, Const.WOOD};
 	private string[] randomAnimal = new string[5] {Const.FOX, Const.DRAGON, Const.TANUKI, Const.ONI, Const.MOOSE};
@@ -372,6 +377,7 @@ public class SelectionScript : MonoBehaviour {
 				}
 			}
 			else {
+				print ("fuck");
 				TimerLabel.SetActive (false);
 				InfoSheet.SetActive (false);
 				simulationScript.p1Attack = p1a;
@@ -388,10 +394,35 @@ public class SelectionScript : MonoBehaviour {
 
 	}
 
-	public void WhoWon () {
+	public IEnumerator WhoWon () {
+		
+		projectile1.SetActive (true);
+		Vector3 totem2Vector = totem2.transform.position;
+		StartCoroutine (this.moveToPosition (projectile1.transform, totem2Vector, 2f));
+		yield return new WaitForSeconds (2f);
+		projectile1.SetActive (false);
+		projectile1.transform.position = totem1.transform.position;
+
+		projectile2.SetActive (true);
+		Vector3 totem1Vector = totem1.transform.position;
+		StartCoroutine (this.moveToPosition (projectile2.transform, totem1Vector, 2f));
+		yield return new WaitForSeconds (2f);
+		projectile2.SetActive (false);
+		projectile2.transform.position = totem2.transform.position;
+
 
 		StartCoroutine(ShowWinner());
 
+	}
+
+	private IEnumerator moveToPosition(Transform transform, Vector3 position, float timeToMove) {
+		var currentPos = transform.localPosition;
+		var t = 0f;
+		while(t < 1) {
+			t += Time.deltaTime / timeToMove;
+			transform.localPosition = Vector3.Lerp(currentPos, position, t);
+			yield return null;
+		}
 	}
 
 	IEnumerator ShowWinner () {

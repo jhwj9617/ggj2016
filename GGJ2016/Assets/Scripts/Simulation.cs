@@ -112,10 +112,10 @@ public class Simulation : MonoBehaviour {
 			Debug.Log ("Player2 taking:" +p2DamageTaken);
 
 			// Animation
-
+			print("Hello who won ");
 			selectionScript.P1DmgTaken = p1DamageTaken;
 			selectionScript.P2DmgTaken = p2DamageTaken;
-			selectionScript.WhoWon();
+			StartCoroutine(selectionScript.WhoWon());
 
 		}
 
