@@ -5,21 +5,27 @@ public class SelectionScript : MonoBehaviour {
 	
 	private string p1a;
 	private string p1d;
+	private string p1s;
 	private string p2a;
 	private string p2d;
+	private string p2s;
 	private bool a1Ready;
 	private bool a2Ready;
 	private bool d1Ready;
 	private bool d2Ready;
+	private bool s1Ready;
+	private bool s2Ready;
 	public bool p1Ready;
 	public bool p2Ready;
 	public bool allReady;
 	public bool CombatEnded = true;
 
-	public int CombatResult = 0;
+	public int P1DmgTaken = 0;
+	public int P2DmgTaken = 0;
 
 	private float countDown;
 	private string[] randomTotem = new string[5] {Const.FIRE, Const.WATER, Const.EARTH, Const.METAL, Const.WOOD};
+	private string[] randomAnimal = new string[5] {Const.FOX, Const.DRAGON, Const.TANUKI, Const.ONI, Const.MOOSE};
 
 	public GameObject TimerLabel;
 	private UILabel _TimerLabel;
@@ -34,13 +40,17 @@ public class SelectionScript : MonoBehaviour {
 	public void Reinitialization() {
 		p1a = null;
 		p1d = null;
+		p1s = null;
 		p2a = null;
 		p2d = null;
+		p2s = null;
 
 		a1Ready = false;
 		a2Ready = false;
 		d1Ready = false;
 		d2Ready = false;
+		s1Ready = false;
+		s2Ready = false;
 		p1Ready = false;
 		p2Ready = false;
 		allReady = false;
@@ -54,6 +64,12 @@ public class SelectionScript : MonoBehaviour {
 		int n = randomTotem.Length;
 		return randomTotem[Random.Range (0, n)] ;  
 
+	}
+
+	string chooseRandomAnimal () {
+		int n = randomAnimal.Length;
+		return randomAnimal[Random.Range (0, n)] ;  
+		
 	}
 
 
@@ -88,16 +104,22 @@ public class SelectionScript : MonoBehaviour {
 					if (p1d == null) {
 						p1d = chooseRandomTotem ();
 					}
+					if (p1s == null){
+						p1s = chooseRandomAnimal (); 
+					}
 					if (p2a == null) {
 						p2a = chooseRandomTotem (); 
 					}
 					if (p2d == null) {
 						p2d = chooseRandomTotem (); 
-						
+					}
+					if (p2s == null){
+						p2s = chooseRandomAnimal (); 
 					}
 
 					Debug.Log("P1a: " + p1a + " P2a: " + p2a);
 					Debug.Log("P1d: " + p1d + " P2d: " + p2d);
+					Debug.Log("P1s: " + p1s + " P2s: " + p2s);
 
 					p1Ready = true;
 					p2Ready = true;
@@ -145,35 +167,63 @@ public class SelectionScript : MonoBehaviour {
 						if (Input.GetKeyDown (KeyCode.Alpha1)) {
 							p1d = Const.FIRE;
 							d1Ready = true;
-							p1Ready = true;
-							print("Player1Defense = FIRE, Player 1 Ready");
+							print("Player1Defense = FIRE");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha2)) {
 							p1d = Const.WOOD;
 							d1Ready = true;
-							p1Ready = true;
-							print("Player1Defense = WOOD, Player 1 Ready");
+							print("Player1Defense = WOOD");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha3)) {
 							p1d = Const.WATER;
 							d1Ready = true;
-							p1Ready = true;
-							print("Player1Defense = WATER, Player 1 Ready");
+							print("Player1Defense = WATER");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha4)) {
 							p1d = Const.METAL;
 							d1Ready = true;
-							p1Ready = true;
-							print("Player1Defense = METAL, Player 1 Ready");
+							print("Player1Defense = METAL");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha5)) {
 							p1d = Const.EARTH;
 							d1Ready = true;
-							p1Ready = true;
-							print("Player1Defense = EARTH, Player 1 Ready");
+							print("Player1Defense = EARTH");
 						}
 
+					}else if(!s1Ready) {
+						if (Input.GetKeyDown (KeyCode.Alpha1)) {
+							p1s = Const.FOX;
+							s1Ready = true;
+							p1Ready = true;
+							print("Player1Support = FOX, Player 1 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha2)) {
+							p1s = Const.MOOSE;
+							s1Ready = true;
+							p1Ready = true;
+							print("Player1Support = MOOSE, Player 1 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha3)) {
+							p1s = Const.DRAGON;
+							s1Ready = true;
+							p1Ready = true;
+							print("Player1Support = DRAGON, Player 1 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha4)) {
+							p1s = Const.ONI;
+							s1Ready = true;
+							p1Ready = true;
+							print("Player1Support = ONI, Player 1 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha5)) {
+							p1s = Const.TANUKI;
+							s1Ready = true;
+							p1Ready = true;
+							print("Player1Support = TANUKI, Player 1 Ready");
+						}
+						
 					}
+
 
 
 					// Player 2 Selections
@@ -209,34 +259,61 @@ public class SelectionScript : MonoBehaviour {
 						if (Input.GetKeyDown (KeyCode.Alpha6)) {
 							p2d = Const.FIRE;
 							d2Ready = true;
-							p2Ready = true;
-							print("Player2Defense = FIRE, Player 2 Ready");
+							print("Player2Defense = FIRE");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha7)) {
 							p2d = Const.WOOD;
 							d2Ready = true;
-							p2Ready = true;
-							print("Player2Defense = WOOD, Player 2 Ready");
+							print("Player2Defense = WOOD");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha8)) {
 							p2d = Const.WATER;
 							d2Ready = true;
-							p2Ready = true;
-							print("Player2Defense = WATER, Player 2 Ready");
+							print("Player2Defense = WATER");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha9)) {
 							p2d = Const.METAL;
 							d2Ready = true;
-							p2Ready = true;
-							print("Player2Defense = METAL, Player 2 Ready");
+							print("Player2Defense = METAL");
 						}
 						else if (Input.GetKeyDown (KeyCode.Alpha0)) {
 							p2d = Const.EARTH;
 							d2Ready = true;
-							p2Ready = true;
-							print("Player2Defense = EARTH, Player 2 Ready");
+							print("Player2Defense = EARTH");
 						}
 
+					}else if(!s2Ready) {
+						if (Input.GetKeyDown (KeyCode.Alpha6)) {
+							p2s = Const.FOX;
+							s2Ready = true;
+							p1Ready = true;
+							print("Player1Support = FOX, Player 2 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha7)) {
+							p2s = Const.MOOSE;
+							s2Ready = true;
+							p2Ready = true;
+							print("Player1Support = MOOSE, Player 2 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha8)) {
+							p2s = Const.DRAGON;
+							s2Ready = true;
+							p2Ready = true;
+							print("Player1Support = DRAGON, Player 2 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha9)) {
+							p2s = Const.ONI;
+							s2Ready = true;
+							p2Ready = true;
+							print("Player1Support = ONI, Player 2 Ready");
+						}
+						else if (Input.GetKeyDown (KeyCode.Alpha0)) {
+							p2s = Const.TANUKI;
+							s2Ready = true;
+							p2Ready = true;
+							print("Player1Support = TANUKI, Player 2 Ready");
+						}
+						
 					}
 				} 
 				else if (p1Ready && p2Ready) {
@@ -250,6 +327,8 @@ public class SelectionScript : MonoBehaviour {
 				simulationScript.p2Attack = p2a;
 				simulationScript.p1Defense = p1d;
 				simulationScript.p2Defense = p2d;
+				simulationScript.p1Animal = p1s;
+				simulationScript.p2Animal = p2s;
 				simulationScript.totemsChosen = true;
 				Reinitialization();
 			}
@@ -264,13 +343,8 @@ public class SelectionScript : MonoBehaviour {
 
 	public IEnumerator ShowWinner () {
 
-		if (CombatResult == 0) {
-			Debug.Log("It's a Draw!");
-		} else if (CombatResult == 1) {
-			Debug.Log("P1 WINS!");
-		} else if (CombatResult == 2) {
-			Debug.Log("P2 WINS!");
-		}
+		Debug.Log("p1 took: " + P1DmgTaken);
+		Debug.Log("p2 took: " + P2DmgTaken);
 
 		yield return new WaitForSeconds(2f);
 

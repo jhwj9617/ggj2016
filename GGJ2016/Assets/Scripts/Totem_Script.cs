@@ -90,6 +90,8 @@ public class Totem_Script : MonoBehaviour {
 		string totemFileLoc = "Sprites/TotemFaces/";
 		Sprite sprite = Resources.Load <Sprite> (totemFileLoc + asset);
 
+		print(asset);
+
 		segment.GetComponent<SpriteRenderer>().sprite = sprite;
 
 		segment.transform.localScale = spriteScaleVector;
