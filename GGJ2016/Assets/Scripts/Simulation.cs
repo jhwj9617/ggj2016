@@ -63,9 +63,6 @@ public class Simulation : MonoBehaviour {
 			Debug.Log ("Totems have been chosen");
 
 			totemsChosen = false;
-			
-			p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal);
-			p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal);
 
 			//How much each player is being damaged
 			p1BaseDamageTaken = onAttack(p2Attack, p1Defense, p2Animal);
@@ -111,11 +108,17 @@ public class Simulation : MonoBehaviour {
 			Debug.Log ("Player1 taking:"+p1DamageTaken);
 			Debug.Log ("Player2 taking:" +p2DamageTaken);
 
+			p1TotemScript.buildTotem(p1Attack, p1Defense, p1Animal, p1DamageTaken);
+			p2TotemScript.buildTotem(p2Attack, p2Defense, p2Animal, p2DamageTaken);
+
+
 			// Animation
 			print("Hello who won ");
 			selectionScript.P1DmgTaken = p1DamageTaken;
 			selectionScript.P2DmgTaken = p2DamageTaken;
 			StartCoroutine(selectionScript.WhoWon());
+
+
 
 		}
 

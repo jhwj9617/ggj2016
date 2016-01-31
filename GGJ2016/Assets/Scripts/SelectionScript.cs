@@ -423,23 +423,39 @@ public class SelectionScript : MonoBehaviour {
 	}
 
 	public IEnumerator WhoWon () {
+		float initialWaitTime = 1f;
+		yield return new WaitForSeconds (initialWaitTime);
+
+		float projectileTime = 2f;
+		float explosionTime = 1.5f;
 		
 		projectile1.SetActive (true);
-		Vector3 totem2Vector = totem2.transform.position;
-		StartCoroutine (this.moveToPosition (projectile1.transform, totem2Vector, 2f));
-		yield return new WaitForSeconds (2f);
-		projectile1.SetActive (false);
-		projectile1.transform.position = totem1.transform.position;
+		Vector3 p1destination = simulationScript.p2TotemScript.getSupportSegment().transform.position;
+		p1destination.x -= 0.5f;
+		p1destination.y -= 1f;
+		projectile1.transform.localEulerAngles = new Vector3(0f, 0f, 15f);
+		StartCoroutine (this.moveToPosition (projectile1.transform, p1destination, projectileTime));
+
 
 		projectile2.SetActive (true);
-		Vector3 totem1Vector = totem1.transform.position;
-		StartCoroutine (this.moveToPosition (projectile2.transform, totem1Vector, 2f));
-		yield return new WaitForSeconds (2f);
-		projectile2.SetActive (false);
-		projectile2.transform.position = totem2.transform.position;
+		Vector3 p2destination = simulationScript.p1TotemScript.getSupportSegment().transform.position;		
+		p2destination.x += 0.5f;
+		p2destination.y -= 1f;
+		projectile2.transform.localEulerAngles = new Vector3(0f, 0f, -15f);
+		StartCoroutine (this.moveToPosition (projectile2.transform, p2destination, projectileTime));
 
+		yield return new WaitForSeconds (projectileTime);
+		projectile1.SetActive (false);
+		projectile2.SetActive (false);
+		// reset projectile positions
+		projectile1.transform.position = simulationScript.p1TotemScript.getAttackSegment().transform.position;
+		projectile2.transform.position = simulationScript.p2TotemScript.getAttackSegment().transform.position;
+
+		simulationScript.p1TotemScript.explodeTotem(-1);
+		simulationScript.p2TotemScript.explodeTotem(1);
 
 		StartCoroutine(ShowWinner());
+		yield return new WaitForSeconds (explosionTime);
 
 	}
 

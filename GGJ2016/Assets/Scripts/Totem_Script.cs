@@ -10,6 +10,8 @@ public class Totem_Script : MonoBehaviour {
 	public GameObject defenseSegment;
 	public GameObject supportSegment;
 
+	private int damageTaken;
+
 	private const string attackCode = "att";
 	private const string defenseCode = "def";
 	private const string supportCode = "sup";
@@ -46,7 +48,9 @@ public class Totem_Script : MonoBehaviour {
 	}
 
 	public void explodeTotem(int direction) {
-		attackSegment.GetComponent<Rigidbody2D> ().AddForce(new Vector2(Random.Range(200f * direction, 400f * direction), Random.Range(200f, 400f)));
+		float forceFactor = 7f;
+		float force = damageTaken * forceFactor * direction;
+		defenseSegment.GetComponent<Rigidbody2D> ().AddForce(new Vector2(force, force));
 	}
 
 	public void deleteTotem() {
@@ -69,7 +73,7 @@ public class Totem_Script : MonoBehaviour {
 		placeholderLevel += 1;
 	}
 
-	public void buildTotem(string attack, string defense, string support) {
+	public void buildTotem(string attack, string defense, string support, int damageTaken) {
 		attackSegment.SetActive (false);
 		defenseSegment.SetActive (false);
 		supportSegment.SetActive (false);
@@ -77,6 +81,7 @@ public class Totem_Script : MonoBehaviour {
 		this.attack = attack;
 		this.defense = defense;
 		this.support = support;
+		this.damageTaken = Mathf.Max(damageTaken, 0);
 		StartCoroutine(this.buildTotemSequence());
 	}
 
@@ -173,15 +178,15 @@ public class Totem_Script : MonoBehaviour {
 		}
 	}
 
-	public string getAttack() {
-		return attack;
+	public GameObject getAttackSegment() {
+		return attackSegment;
 	}
 
-	public string getDefense() {
-		return defense;
+	public GameObject getDefenseSegment() {
+		return defenseSegment;
 	}
 
-	public string getSupport() {
-		return support;
+	public GameObject getSupportSegment() {
+		return supportSegment;
 	}
 }
