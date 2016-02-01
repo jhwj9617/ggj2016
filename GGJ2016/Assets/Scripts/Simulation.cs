@@ -122,31 +122,6 @@ public class Simulation : MonoBehaviour {
 			selectionScript.P2DmgTaken = p2DamageTaken;
 			StartCoroutine(selectionScript.WhoWon());
 		}
-
-		if (Input.GetKeyDown (KeyCode.D)) {
-			p1TotemScript.deleteTotem();
-			p2TotemScript.deleteTotem();
-		}
-
-		if (Input.GetKeyDown (KeyCode.E)) {
-			p1TotemScript.explodeTotem(1);
-		}
-		if (Input.GetKeyDown (KeyCode.R)) {
-			p2TotemScript.explodeTotem(-1);
-		}
-
-		if (Input.GetKeyDown (KeyCode.Q)) {
-			p1TotemScript.getHit();
-		}
-		if (Input.GetKeyDown (KeyCode.W)) {
-			p2TotemScript.getHit();
-		}
-//		if (Input.GetKeyDown (KeyCode.T)) {
-//			p1TotemScript.addPlaceholder();
-//		}
-//		if (Input.GetKeyDown (KeyCode.Y)) {
-//			p2TotemScript.addPlaceholder();
-//		}
 	}
 	
 	private IEnumerator buildTotems() {

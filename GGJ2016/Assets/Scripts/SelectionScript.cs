@@ -69,6 +69,8 @@ public class SelectionScript : MonoBehaviour {
 	public AudioSource titleScreenMusic;
 	public AudioSource battleMusic;
 
+	public GameObject TutorialSheet;
+
 
 	// FIRE -> WOOD -> WATER -> EARTH -> METAL
 
@@ -91,7 +93,7 @@ public class SelectionScript : MonoBehaviour {
 		p2Ready = false;
 		allReady = false;
 
-		countDown = 5;
+		countDown = 10;
 	}
 
 
@@ -120,14 +122,39 @@ public class SelectionScript : MonoBehaviour {
 
 		projectile1Anim = projectile1.GetComponent<Animator> ();
 		projectile2Anim = projectile2.GetComponent<Animator> ();
-		
-		pickProjectileColor ();
+
 		titleScreenMusic.Play ();
 	}
 
 	private void pickProjectileColor() {
-		projectile1Anim.runtimeAnimatorController = earthProjectile;
-		projectile2Anim.runtimeAnimatorController = waterProjectile;
+		
+		string p1Attack = p1a;
+		print ("attack: ");
+		print (p1Attack);
+		if (p1Attack == Const.EARTH) {
+			projectile1Anim.runtimeAnimatorController = earthProjectile;
+		} else if (p1Attack == Const.FIRE) {
+			projectile1Anim.runtimeAnimatorController = fireProjectile;
+		} else if (p1Attack == Const.METAL) {
+			projectile1Anim.runtimeAnimatorController = metalProjectile;
+		} else if (p1Attack == Const.WATER) {
+			projectile1Anim.runtimeAnimatorController = waterProjectile;
+		} else if (p1Attack == Const.WOOD) {
+			projectile1Anim.runtimeAnimatorController = woodProjectile;
+		}
+
+		string p2Attack = p2a;
+		if (p2Attack == Const.EARTH) {
+			projectile2Anim.runtimeAnimatorController = earthProjectile;
+		} else if (p2Attack == Const.FIRE) {
+			projectile2Anim.runtimeAnimatorController = fireProjectile;
+		} else if (p2Attack == Const.METAL) {
+			projectile2Anim.runtimeAnimatorController = metalProjectile;
+		} else if (p2Attack == Const.WATER) {
+			projectile2Anim.runtimeAnimatorController = waterProjectile;
+		} else if (p2Attack == Const.WOOD) {
+			projectile2Anim.runtimeAnimatorController = woodProjectile;
+		}
 	}
 
 	void ShowMainMenuUI () {
@@ -154,6 +181,7 @@ public class SelectionScript : MonoBehaviour {
 		removeWinMessage();
 		titleScreenMusic.Stop ();
 		battleMusic.Play ();
+		TutorialSheet.SetActive (false);
 	}
 
 	void ShowEndGameUI () {
@@ -162,6 +190,7 @@ public class SelectionScript : MonoBehaviour {
 		CombatUI.SetActive(false);
 		EndGameUI.SetActive(true);
 		GameOver();
+		TutorialSheet.SetActive (false);
 	}
 		
 
@@ -178,6 +207,15 @@ public class SelectionScript : MonoBehaviour {
 
 			CombatEnded = true;
 
+		}
+
+		if (Input.GetKeyDown (KeyCode.X) && MainMenuUi.activeInHierarchy) {
+
+			if (TutorialSheet.activeInHierarchy) {
+				TutorialSheet.SetActive (false);
+			} else {
+				TutorialSheet.SetActive (true);
+			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && EndGameUI.activeInHierarchy) {
@@ -448,6 +486,7 @@ public class SelectionScript : MonoBehaviour {
 				} 
 				else if (p1Ready && p2Ready) {
 					allReady = true;
+					pickProjectileColor ();
 					print("Both players ready");
 				}
 			}
